@@ -139,117 +139,112 @@ export default function App() {
     setError("");
   }
 
-  return (
-    <div className="page">
-      <div  className= "card">
-        <div className= "header">
-          <h1 className= "title">
-            {mode === "login" ? "Welcome" : "Create account"}
-          </h1>
-          <p className= "subtitle">
-            {mode === "login"
-              ? "Log in to continue."
-              : "Make an account in 10 seconds."}
-          </p>
-        </div>
-
-        {isLoggedIn ? (
-          <>
-            <p className= "text">You’re logged in. Congrats.</p>
-            <button className= "button" onClick={handleLogout}>
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            {mode === "login" ? (
-              <form onSubmit={handleSubmit} className= "form">
-                <label className= "label">
-                  Email
-                  <input
-                    className= "input"
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email"
-                  />
-                </label>
-
-                <PasswordInput
-                  value={form.password}
-                  onChange={handleChange}
-                  showPassword={showPassword}
-                  setShowPassword={setShowPassword}
-                  placeholder="Enter your password"
-                />
-
-                {error && <p className= "error">{error}</p>}
-
-                <button className= "button"} type="submit">
-                  Login
-                </button>
-
-                <div className= "dividerRow">
-                  <div className= "dividerLine"/>
-                  <span className= "dividerText">or</span>
-                  <div className= "dividerLine"/>
-                </div>
-
-                <p className= "hint">
-                  No account?{" "}
-                  <button
-                    type="button"
-                    className= "linkBtn"
-                    onClick={() => setMode("register")}
-                  >
-                    Create one
-                  </button>
-                </p>
-              </form>
-            ) : (
-              <form onSubmit={handleRegister} className= "form">
-                <label className= "label">
-                  Email
-                  <input
-                    className= "input"
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email"
-                  />
-                </label>
-
-                <PasswordInput
-                  value={form.password}
-                  onChange={handleChange}
-                  showPassword={showPassword}
-                  setShowPassword={setShowPassword}
-                  placeholder="Create a password"
-                />
-
-                {error && <p className= "error">{error}</p>}
-
-                <button className= "button" type="submit">
-                  Create Account
-                </button>
-
-                <p className= "hint">
-                  Already have one?{" "}
-                  <button
-                    type="button"
-                    className= "linkBtn"
-                    onClick={() => setMode("login")}
-                  >
-                    Log in
-                  </button>
-                </p>
-              </form>
-            )}
-          </>
-        )}
+return (
+  <div className="page">
+    <div className="card">
+      <div className="header">
+        <h1 className="title">{mode === "login" ? "Welcome" : "Create account"}</h1>
+        <p className="subtitle">
+          {mode === "login" ? "Log in to continue." : "Make an account in 10 seconds."}
+        </p>
       </div>
+
+      {isLoggedIn ? (
+        <>
+          <p className="text">You’re logged in. Congrats.</p>
+          <button className="button" onClick={handleLogout}>
+            Logout
+          </button>
+        </>
+      ) : (
+        <>
+          {mode === "login" ? (
+            <form onSubmit={handleSubmit} className="form">
+              <label className="label">
+                Email
+                <input
+                  className="input"
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                />
+              </label>
+
+              <PasswordInput
+                value={form.password}
+                onChange={handleChange}
+                showPassword={showPassword}
+                setShowPassword={setShowPassword}
+                placeholder="Enter your password"
+              />
+
+              {error && <p className="error">{error}</p>}
+
+              <button className="button" type="submit">
+                Login
+              </button>
+
+              <div className="dividerRow">
+                <div className="dividerLine" />
+                <span className="dividerText">or</span>
+                <div className="dividerLine" />
+              </div>
+
+              <p className="hint">
+                No account?{" "}
+                <button
+                  type="button"
+                  className="linkBtn"
+                  onClick={() => setMode("register")}
+                >
+                  Create one
+                </button>
+              </p>
+            </form>
+          ) : (
+            <form onSubmit={handleRegister} className="form">
+              <label className="label">
+                Email
+                <input
+                  className="input"
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                />
+              </label>
+
+              <PasswordInput
+                value={form.password}
+                onChange={handleChange}
+                showPassword={showPassword}
+                setShowPassword={setShowPassword}
+                placeholder="Create a password"
+              />
+
+              {error && <p className="error">{error}</p>}
+
+              <button className="button" type="submit">
+                Create Account
+              </button>
+
+              <p className="hint">
+                Already have one?{" "}
+                <button
+                  type="button"
+                  className="linkBtn"
+                  onClick={() => setMode("login")}
+                >
+                  Log in
+                </button>
+              </p>
+            </form>
+          )}
+        </>
+      )}
     </div>
-  );
-}
+  </div>
+);
