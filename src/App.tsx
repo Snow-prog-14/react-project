@@ -139,6 +139,46 @@ const styles: Record<string, React.CSSProperties> = {
   },
 };
 
+type PasswordInputProps = {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  showPassword: boolean;
+  setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
+  placeholder: string;
+};
+
+function PasswordInput({
+  value,
+  onChange,
+  showPassword,
+  setShowPassword,
+  placeholder,
+}: PasswordInputProps) {
+  return (
+    <label style={styles.label}>
+      Password
+      <div style={styles.passwordWrap}>
+        <input
+          style={styles.input}
+          type={showPassword ? "text" : "password"}
+          name="password"
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+        />
+
+        <button
+          type="button"
+          style={styles.eyeBtn}
+          onClick={() => setShowPassword((prev) => !prev)}
+        >
+          {showPassword ? "🙈" : "👁️"}
+        </button>
+      </div>
+    </label>
+  );
+}
+
 export default function App() {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [form, setForm] = useState<LoginForm>({ email: "", password: "" });
@@ -178,14 +218,6 @@ export default function App() {
     }
 
     setError("Invalid Email or Password");
-
-    // Fake login rule (demo only)
-    if (form.email === "test@email.com" && form.password === "1234") {
-      setIsLoggedIn(true);
-      return;
-    }
-
-    setError("Invalid credentials. Try test@email.com / 1234");
   }
 
   function handleRegister(e: React.FormEvent) {
@@ -263,33 +295,13 @@ export default function App() {
                   />
                 </label>
 
-                <label style={styles.label}>
-                  Password
-                  <div style={styles.passwordWrap}>
-                    <input
-                      style={styles.input}
-                      type={showPassword ? "text" : "password"}
-                      name="password"
-                      value={form.password}
-                      onChange={handleChange}
-                      placeholder={
-                        mode === "login"
-                          ? "Enter your Password"
-                          : "Create a Password"
-                      }
-                    />
-                    <button
-                      type="button"
-                      style={styles.eyeBtn}
-                      onClick={() => setShowPassword((prev) => !prev)}
-                      aria-label={
-                        showPassword ? "Hide Password" : "Show Password"
-                      }
-                    >
-                      {showPassword ? "🙈" : "👁️"}
-                    </button>
-                  </div>
-                </label>
+                <PasswordInput
+                  value={form.password}
+                  onChange={handleChange}
+                  showPassword={showPassword}
+                  setShowPassword={setShowPassword}
+                  placeholder="Enter your password"
+                />
 
                 {error && <p style={styles.error}>{error}</p>}
 
@@ -328,25 +340,13 @@ export default function App() {
                   />
                 </label>
 
-                <label style={styles.label}>
-                  Password
-                  <input
-                    style={styles.input}
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    placeholder="Create a password"
-                  />
-                </label>
-
-                <button
-                  type="button"
-                  style={styles.button}
-                  onClick={() => setShowPassword((prev) => !prev)}
-                >
-                  {showPassword ? "Hide" : "Show"}
-                </button>
+                <PasswordInput
+                  value={form.password}
+                  onChange={handleChange}
+                  showPassword={showPassword}
+                  setShowPassword={setShowPassword}
+                  placeholder="Create a password"
+                />
 
                 {error && <p style={styles.error}>{error}</p>}
 
