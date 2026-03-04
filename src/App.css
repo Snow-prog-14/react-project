@@ -61,7 +61,7 @@
   min-height: 100vh;
   display: grid;
   place-items: center;
-  background: #0f172a;
+  background: transparent;
   padding: 16px;
 }
 
