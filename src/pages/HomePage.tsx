@@ -7,7 +7,7 @@ type Props = { onLogout: () => void };
 
 export default function HomePage({ onLogout }: Props) {
   const [query, setQuery] = useState("");
-
+  const [collapsed, setCollapsed] = useState(false);
   const filtered = videos.filter((v) => {
     const q = query.toLowerCase();
     return (
@@ -17,6 +17,7 @@ export default function HomePage({ onLogout }: Props) {
 
   return (
     <div className="container-fluid p-0">
+      {/* navbar */}
       <nav className="navbar navbar-dark bg-dark border-bottom border-secondary px-3">
         <span className="navbar-brand">▶ YouTube</span>
 
@@ -24,8 +25,6 @@ export default function HomePage({ onLogout }: Props) {
           <input
             className="form-control me-2 bg-black text-light border-secondary"
             placeholder="Search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
           />
           <button className="btn btn-primary" type="button">
             Search
@@ -37,23 +36,17 @@ export default function HomePage({ onLogout }: Props) {
         </button>
       </nav>
 
-      <div className="row g-0">
-        <div className="col-12 col-md-3 col-lg-2">
-          <Sidebar />
-        </div>
-
-        <main className="col-12 col-md-9 col-lg-10 p-3">
+      {/* ✅ flex layout */}
+      <div className="ytShell">
+        <Sidebar collapsed={collapsed} />
+        <main className="ytMain p-3">
           <h5 className="text-light mb-3">Recommended</h5>
 
           <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
-            {filtered.map((video) => (
-              <VideoCard key={video.id} video={video} />
+            {videos.map((v) => (
+              <VideoCard key={v.id} video={v} />
             ))}
           </div>
-
-          {filtered.length === 0 && (
-            <div className="text-secondary mt-3">No videos found.</div>
-          )}
         </main>
       </div>
     </div>
