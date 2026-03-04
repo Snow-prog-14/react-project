@@ -5,6 +5,7 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import WatchPage from "./pages/WatchPage";
 import ShortsPage from "./pages/ShortsPage";
+import Layout from "./layout/Layout";
 
 import "./App.css";
 import "./index.css";
@@ -61,7 +62,17 @@ export default function App() {
         }
       />
 
+      <Route
+  element={isLoggedIn ? <Layout onLogout={handleLogout} /> : <Navigate to="/login" replace />}
+  >
+    <Route path="/home" element={<HomePage />} />
+    <Route path="/watch/:id" element={<WatchPage />} />
+    <Route path="/shorts" element={<ShortsPage />} />
+  </Route>
+
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+
+    
   );
 }
