@@ -26,53 +26,46 @@ export default function App() {
   };
 
   return (
-    <Routes>
-      {/* Default route */}
-      <Route
-        path="/"
-        element={<Navigate to={isLoggedIn ? "/home" : "/login"} replace />}
-      />
+  <Routes>
+  {/* Default route */}
+  <Route
+    path="/"
+    element={<Navigate to={isLoggedIn ? "/home" : "/login"} replace />}
+  />
 
-      {/* Public routes */}
-      <Route
-        path="/login"
-        element={
-          isLoggedIn ? <Navigate to="/home" replace /> : <LoginPage onLogin={handleLogin} />
-        }
-      />
-      <Route
-        path="/register"
-        element={isLoggedIn ? <Navigate to="/home" replace /> : <RegisterPage />}
-      />
+  {/* Public routes */}
+  <Route
+    path="/login"
+    element={
+      isLoggedIn ? (
+        <Navigate to="/home" replace />
+      ) : (
+        <LoginPage onLogin={handleLogin} />
+      )
+    }
+  />
+  <Route
+    path="/register"
+    element={isLoggedIn ? <Navigate to="/home" replace /> : <RegisterPage />}
+  />
 
-      {/* Protected routes */}
-      <Route
-        path="/home"
-        element={isLoggedIn ? <HomePage onLogout={handleLogout} /> : <Navigate to="/login" replace />}
-      />
-      <Route
-        path="/watch/:id"
-        element={isLoggedIn ? <WatchPage /> : <Navigate to="/login" replace />}
-      />
-
-      <Route
-        path="/shorts"
-        element={
-          isLoggedIn ? <ShortsPage onLogout={handleLogout} /> : <Navigate to="/login" replace />
-        }
-      />
-
-      <Route
-  element={isLoggedIn ? <Layout onLogout={handleLogout} /> : <Navigate to="/login" replace />}
+  {/* Protected routes */}
+  <Route
+    element={
+      isLoggedIn ? (
+        <Layout onLogout={handleLogout} />
+      ) : (
+        <Navigate to="/login" replace />
+      )
+    }
   >
     <Route path="/home" element={<HomePage />} />
     <Route path="/watch/:id" element={<WatchPage />} />
     <Route path="/shorts" element={<ShortsPage />} />
   </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
-
-    
+  {/* Catch all */}
+  <Route path="*" element={<Navigate to="/" replace />} />
+</Routes>
   );
 }
