@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { loadUsers, saveUsers } from "../App";
+import { loadUsers, saveUsers } from "../utils/auth";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");

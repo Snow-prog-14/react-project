@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { loadUsers } from "../App";
+import { loadUsers } from "../utils/auth";
 
 type Props = { onLogin: () => void };
 
@@ -34,7 +34,7 @@ export default function LoginPage({ onLogin }: Props) {
     }
 
     onLogin();
-    navigate("/home");
+    navigate("/home", { replace: true });
   }
 
   return (
@@ -84,7 +84,11 @@ export default function LoginPage({ onLogin }: Props) {
               Login
             </button>
 
-            <div className="text-center text-secondary my-3">or</div>
+            <div className="d-flex align-items-center my-3">
+              <hr className="flex-grow-1 border-secondary" />
+              <span className="px-2 text-secondary">or</span>
+              <hr className="flex-grow-1 border-secondary" />
+            </div>
 
             <div className="text-center">
               <Link className="link-info" to="/register">
