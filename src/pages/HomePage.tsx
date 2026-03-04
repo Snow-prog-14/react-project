@@ -1,54 +1,105 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import VideoCard from "../components/VideoCard";
 import { videos } from "../components/videos";
+import { Search, Mic, PlusSquare } from "lucide-react";
 
 type Props = { onLogout: () => void };
 
 export default function HomePage({ onLogout }: Props) {
-  const [query, setQuery] = useState("");
+
   const [collapsed, setCollapsed] = useState(false);
-  const filtered = videos.filter((v) => {
-    const q = query.toLowerCase();
-    return (
-      v.title.toLowerCase().includes(q) || v.channel.toLowerCase().includes(q)
+  const [query, setQuery] = useState("");
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return videos;
+    return videos.filter((v) =>
+      v.title.toLowerCase().includes(q)
     );
-  });
+  }, [query]);
 
   return (
-    <div className="container-fluid p-0">
-      {/* navbar */}
-      <nav className="navbar navbar-dark bg-dark border-bottom border-secondary px-3">
-        <span className="navbar-brand">▶ YouTube</span>
+    <div className="appShell">
 
-        <form className="d-flex flex-grow-1 mx-3" style={{ maxWidth: 700 }}>
-          <input
-            className="form-control me-2 bg-black text-light border-secondary"
-            placeholder="Search"
-          />
-          <button className="btn btn-primary" type="button">
-            Search
+      {/* Top bar */}
+      <header className="topbar">
+
+        <div className="topbarLeft">
+          <button
+            className="iconBtn"
+            onClick={() => setCollapsed((s) => !s)}
+          >
+            ☰
           </button>
-        </form>
 
-        <button className="btn btn-outline-light" onClick={onLogout}>
-          Logout
-        </button>
-      </nav>
+          <div className="brand">
+            <span className="brandDot" />
+            <span className="brandText">YouTube</span>
+          </div>
+        </div>
 
-      {/* ✅ flex layout */}
-      <div className="ytShell">
+        <div className="topbarCenter">
+          <div className="searchWrap">
+            <input
+              className="searchInput"
+              placeholder="Search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+
+            <button className="searchBtn">
+              <Search size={18} />
+            </button>
+          </div>
+
+          <button className="iconBtn">
+            <Mic size={18} />
+          </button>
+        </div>
+
+        <div className="topbarRight">
+          <button className="iconBtn">
+            <PlusSquare size={18} />
+          </button>
+
+          {/* Logout button */}
+          <button onClick={onLogout} className="avatarBtn">
+            Logout
+          </button>
+        </div>
+
+      </header>
+
+      <div className="contentRow">
+
         <Sidebar collapsed={collapsed} />
-        <main className="ytMain p-3">
-          <h5 className="text-light mb-3">Recommended</h5>
 
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
-            {videos.map((v) => (
-              <VideoCard key={v.id} video={v} />
+        <main className="mainContent">
+
+          {/* Category chips */}
+          <div className="chipsRow">
+            {["All", "Gaming", "Music", "Mixes", "Minigame", "News", "Live"].map((c) => (
+              <button
+                key={c}
+                className={`chip ${c === "All" ? "chipActive" : ""}`}
+              >
+                {c}
+              </button>
             ))}
           </div>
+
+          {/* Video grid */}
+          <section className="grid">
+            {filtered.map((v) => (
+              <VideoCard key={v.id} video={v} />
+            ))}
+          </section>
+
         </main>
+
       </div>
+
     </div>
   );
 }

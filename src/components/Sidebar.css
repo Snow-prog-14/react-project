@@ -1,0 +1,26 @@
+.sidebar {
+  width: 240px;
+  padding: 10px;
+  border-right: 1px solid var(--border);
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+.sidebarCollapsed { width: 74px; }
+
+.sideItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  cursor: pointer;
+}
+.sideItem:hover { background: #1b1b1b; }
+.sideIcon { width: 22px; display: grid; place-items: center; }
+.sideLabel { font-size: 14px; }
