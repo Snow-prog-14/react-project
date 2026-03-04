@@ -1,3 +1,4 @@
+import Sidebar from "../components/Sidebar";
 type Props = { onLogout: () => void };
 
 export default function HomePage({ onLogout }: Props) {
