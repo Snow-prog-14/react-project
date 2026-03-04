@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./App.css";
 
 type LoginForm = {
   email: string;
@@ -19,126 +20,6 @@ function saveUsers(users: User[]) {
   localStorage.setItem("users", JSON.stringify(users));
 }
 
-const styles: Record<string, React.CSSProperties> = {
-  header: {
-    marginBottom: 18,
-  },
-  subtitle: {
-    margin: "8px 0 0",
-    color: "#94a3b8",
-    fontSize: 13,
-    lineHeight: 1.4,
-  },
-  passwordWrap: {
-    position: "relative",
-    display: "grid",
-  },
-  eyeBtn: {
-    position: "absolute",
-    right: 10,
-    top: "50%",
-    transform: "translateY(-50%)",
-    border: "1px solid rgba(148,163,184,0.16)",
-    background: "rgba(15, 23, 42, 0.7)",
-    color: "#e5e7eb",
-    borderRadius: 10,
-    padding: "6px 10px",
-    cursor: "pointer",
-    lineHeight: 1,
-  },
-  dividerRow: {
-    display: "grid",
-    gridTemplateColumns: "1fr auto 1fr",
-    alignItems: "center",
-    gap: 10,
-    marginTop: 14,
-    marginBottom: 6,
-  },
-  dividerLine: {
-    height: 1,
-    background: "rgba(148,163,184,0.18)",
-  },
-  dividerText: {
-    color: "#94a3b8",
-    fontSize: 12,
-  },
-  linkBtn: {
-    background: "transparent",
-    border: "none",
-    padding: 0,
-    color: "#a5b4fc",
-    cursor: "pointer",
-    fontWeight: 700,
-    textDecoration: "underline",
-  },
-
-  page: {
-    minHeight: "100vh",
-    display: "grid",
-    placeItems: "center",
-    background: "#0f172a",
-    padding: 16,
-  },
-  card: {
-    width: "100%",
-    maxWidth: 380,
-    background: "#111827",
-    borderRadius: 16,
-    padding: 24,
-    boxShadow: "0 12px 30px rgba(0,0,0,0.35)",
-  },
-  title: {
-    margin: 0,
-    marginBottom: 16,
-    color: "#e5e7eb",
-    fontSize: 24,
-  },
-  form: {
-    display: "grid",
-    gap: 12,
-  },
-  label: {
-    color: "#cbd5e1",
-    display: "grid",
-    gap: 6,
-    fontSize: 14,
-  },
-  input: {
-    padding: "10px 12px",
-    borderRadius: 10,
-    border: "1px solid #334155",
-    background: "#0b1220",
-    color: "#e5e7eb",
-    outline: "none",
-  },
-  button: {
-    marginTop: 8,
-    padding: "10px 12px",
-    borderRadius: 10,
-    border: "none",
-    background: "#6366f1",
-    color: "white",
-    fontWeight: 600,
-    cursor: "pointer",
-  },
-  error: {
-    margin: 0,
-    color: "#fb7185",
-    fontSize: 14,
-  },
-  hint: {
-    margin: 0,
-    marginTop: 8,
-    color: "#94a3b8",
-    fontSize: 12,
-  },
-  text: {
-    color: "#cbd5e1",
-    marginTop: 8,
-    marginBottom: 12,
-  },
-};
-
 type PasswordInputProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -155,11 +36,11 @@ function PasswordInput({
   placeholder,
 }: PasswordInputProps) {
   return (
-    <label style={styles.label}>
+    <label className="label">
       Password
-      <div style={styles.passwordWrap}>
+      <div className="passwordWrap">
         <input
-          style={styles.input}
+          className="input"
           type={showPassword ? "text" : "password"}
           name="password"
           value={value}
@@ -169,7 +50,7 @@ function PasswordInput({
 
         <button
           type="button"
-          style={styles.eyeBtn}
+          className="eyeBtn"
           onClick={() => setShowPassword((prev) => !prev)}
         >
           {showPassword ? "🙈" : "👁️"}
@@ -259,13 +140,13 @@ export default function App() {
   }
 
   return (
-    <div style={styles.page}>
-      <div style={styles.card}>
-        <div style={styles.header}>
-          <h1 style={styles.title}>
+    <div className="page">
+      <div  className= "card">
+        <div className= "header">
+          <h1 className= "title">
             {mode === "login" ? "Welcome" : "Create account"}
           </h1>
-          <p style={styles.subtitle}>
+          <p className= "subtitle">
             {mode === "login"
               ? "Log in to continue."
               : "Make an account in 10 seconds."}
@@ -274,19 +155,19 @@ export default function App() {
 
         {isLoggedIn ? (
           <>
-            <p style={styles.text}>You’re logged in. Congrats.</p>
-            <button style={styles.button} onClick={handleLogout}>
+            <p className= "text">You’re logged in. Congrats.</p>
+            <button className= "button" onClick={handleLogout}>
               Logout
             </button>
           </>
         ) : (
           <>
             {mode === "login" ? (
-              <form onSubmit={handleSubmit} style={styles.form}>
-                <label style={styles.label}>
+              <form onSubmit={handleSubmit} className= "form">
+                <label className= "label">
                   Email
                   <input
-                    style={styles.input}
+                    className= "input"
                     type="email"
                     name="email"
                     value={form.email}
@@ -303,23 +184,23 @@ export default function App() {
                   placeholder="Enter your password"
                 />
 
-                {error && <p style={styles.error}>{error}</p>}
+                {error && <p className= "error">{error}</p>}
 
-                <button style={styles.button} type="submit">
+                <button className= "button"} type="submit">
                   Login
                 </button>
 
-                <div style={styles.dividerRow}>
-                  <div style={styles.dividerLine} />
-                  <span style={styles.dividerText}>or</span>
-                  <div style={styles.dividerLine} />
+                <div className= "dividerRow">
+                  <div className= "dividerLine"/>
+                  <span className= "dividerText">or</span>
+                  <div className= "dividerLine"/>
                 </div>
 
-                <p style={styles.hint}>
+                <p className= "hint">
                   No account?{" "}
                   <button
                     type="button"
-                    style={styles.linkBtn}
+                    className= "linkBtn"
                     onClick={() => setMode("register")}
                   >
                     Create one
@@ -327,11 +208,11 @@ export default function App() {
                 </p>
               </form>
             ) : (
-              <form onSubmit={handleRegister} style={styles.form}>
-                <label style={styles.label}>
+              <form onSubmit={handleRegister} className= "form">
+                <label className= "label">
                   Email
                   <input
-                    style={styles.input}
+                    className= "input"
                     type="email"
                     name="email"
                     value={form.email}
@@ -348,17 +229,17 @@ export default function App() {
                   placeholder="Create a password"
                 />
 
-                {error && <p style={styles.error}>{error}</p>}
+                {error && <p className= "error">{error}</p>}
 
-                <button style={styles.button} type="submit">
+                <button className= "button" type="submit">
                   Create Account
                 </button>
 
-                <p style={styles.hint}>
+                <p className= "hint">
                   Already have one?{" "}
                   <button
                     type="button"
-                    style={styles.linkBtn}
+                    className= "linkBtn"
                     onClick={() => setMode("login")}
                   >
                     Log in
