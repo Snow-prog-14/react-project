@@ -1,46 +1,26 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import type { Video } from "../components/videos";
 
-type Props = {
-  video: Video;
-};
+export default function VideoCard({ video }: { video: Video }) {
+  const nav = useNavigate();
 
-export default function VideoCard({ video }: Props) {
   return (
-    <div className="col">
-      <Link to={`/watch/${video.id}`} className="text-decoration-none">
-        <div className="card bg-dark text-light border-secondary h-100 shadow-sm ytCard">
-          {/* Thumbnail */}
-          <div className="ratio ratio-16x9 bg-secondary position-relative ytThumb">
-            {video.thumbnail ? (
-              <img
-                src={video.thumbnail}
-                alt={video.title}
-                className="w-100 h-100 object-fit-cover"
-              />
-            ) : null}
+    <article className="card" onClick={() => nav(`/watch/${video.id}`)} role="button">
+      <div className="thumbWrap">
+        <img className="thumb" src={video.thumbnail} alt={video.title} />
+        <span className="duration">{video.duration}</span>
+      </div>
 
-            {/* Duration badge */}
-            <span className="badge bg-black bg-opacity-75 position-absolute bottom-0 end-0 m-2">
-              {video.duration}
-            </span>
-          </div>
-
-          {/* Meta */}
-          <div className="card-body">
-            <div className="d-flex gap-2">
-              <div className="rounded-circle bg-secondary flex-shrink-0 ytAvatarDot" />
-              <div>
-                <div className="fw-bold small ytTitleClamp">{video.title}</div>
-                <div className="text-secondary small">{video.channel}</div>
-                <div className="text-secondary small">
-                  {video.views} • {video.uploaded}
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className="meta">
+        <div className="metaAvatar">•</div>
+        <div className="metaText">
+          <h3 className="title">{video.title}</h3>
+          <p className="sub">{video.channel}</p>
+          <p className="sub">
+            {video.views} • {video.uploaded}
+          </p>
         </div>
-      </Link>
-    </div>
+      </div>
+    </article>
   );
 }

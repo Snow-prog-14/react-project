@@ -11,7 +11,7 @@ export default function LoginPage({ onLogin }: Props) {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-
+//Tinatawanan eh noh
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");

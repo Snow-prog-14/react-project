@@ -1,54 +1,33 @@
-import { useState } from "react";
-import Sidebar from "../components/Sidebar";
+import { useMemo, useState } from "react";
 import VideoCard from "../components/VideoCard";
 import { videos } from "../components/videos";
 
-type Props = { onLogout: () => void };
-
-export default function HomePage({ onLogout }: Props) {
+export default function HomePage() {
   const [query, setQuery] = useState("");
-  const [collapsed, setCollapsed] = useState(false);
-  const filtered = videos.filter((v) => {
-    const q = query.toLowerCase();
-    return (
-      v.title.toLowerCase().includes(q) || v.channel.toLowerCase().includes(q)
-    );
-  });
+// comment
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return videos;
+    return videos.filter((v) => v.title.toLowerCase().includes(q));
+  }, [query]);
 
   return (
-    <div className="container-fluid p-0">
-      {/* navbar */}
-      <nav className="navbar navbar-dark bg-dark border-bottom border-secondary px-3">
-        <span className="navbar-brand">▶ YouTube</span>
-
-        <form className="d-flex flex-grow-1 mx-3" style={{ maxWidth: 700 }}>
-          <input
-            className="form-control me-2 bg-black text-light border-secondary"
-            placeholder="Search"
-          />
-          <button className="btn btn-primary" type="button">
-            Search
+    <>
+      {/* Category chips */}
+      <div className="chipsRow">
+        {["All", "Gaming", "Music", "Mixes", "Minigame", "News", "Live"].map((c) => (
+          <button key={c} className={`chip ${c === "All" ? "chipActive" : ""}`}>
+            {c}
           </button>
-        </form>
-
-        <button className="btn btn-outline-light" onClick={onLogout}>
-          Logout
-        </button>
-      </nav>
-
-      {/* ✅ flex layout */}
-      <div className="ytShell">
-        <Sidebar collapsed={collapsed} />
-        <main className="ytMain p-3">
-          <h5 className="text-light mb-3">Recommended</h5>
-
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
-            {videos.map((v) => (
-              <VideoCard key={v.id} video={v} />
-            ))}
-          </div>
-        </main>
+        ))}
       </div>
-    </div>
+
+      {/* Feed grid */}
+      <section className="grid">
+        {filtered.map((v) => (
+          <VideoCard key={v.id} video={v} />
+        ))}
+      </section>
+    </>
   );
 }
